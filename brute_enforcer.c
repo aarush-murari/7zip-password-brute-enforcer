@@ -1,5 +1,4 @@
-// ConsoleApplication2.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
@@ -17,16 +16,19 @@ using namespace std;
 void bruteForce(string file, string output, vector<char> passwordCharArray, int targetLength, int position) {
 
 	char charList[] = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-	string password;
+	string password = "";
 	string commandString;
+	string nullString;
 	
 	
-	commandString = "7z.exe x \"" + file + "\" -p\"" + password + "\" -o\"" + output + "\" -y";
-	const char* commandCharArray = commandString.c_str();
-	int zipExtractVal = system(commandCharArray);
+	
+	
 
 	if (position == targetLength) {
 		string currentPassword(passwordCharArray.begin(), passwordCharArray.end());
+		commandString = "7z.exe x \"" + file + "\" -p\"" + password + "\" -o\"" + output + "\" -y";
+		const char* commandCharArray = commandString.c_str();
+		int zipExtractVal = system(commandCharArray);
 
 		if (zipExtractVal == 0) {
 			cout << "Password found. Password is: " << currentPassword;
@@ -42,7 +44,8 @@ void bruteForce(string file, string output, vector<char> passwordCharArray, int 
 			}
 			
 		}
-		cout << "Trying: " << currentPassword;
+		cout << "Trying: '" << currentPassword << "'";
+
 		return;
 		
 	}
@@ -50,7 +53,7 @@ void bruteForce(string file, string output, vector<char> passwordCharArray, int 
 	for (char c : charList) {
 		passwordCharArray.push_back(c);
 		bruteForce(file, output, passwordCharArray, targetLength, position + 1);
-		passwordCharArray.erase(passwordCharArray.end());
+		passwordCharArray.erase(passwordCharArray.end() - 1);
 	}
     
 }
@@ -63,7 +66,7 @@ int main(int argc, char* argv[])
 
 
 	string file;
-	//FIXME: "-h" parameter doesn;t work
+	//FIXME: '-h' not working
 	if (argv[1] == "-h") {
 		cout << "Usage:" << endl;
 		cout << argv[0] << " \"path\\to\\file.archive\" \"path\\to\\output\\folder\"" << endl << endl;
