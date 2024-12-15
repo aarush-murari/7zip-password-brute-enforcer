@@ -57,7 +57,11 @@ void bruteForce(string file, string output, vector<char> passwordCharArray, int 
 
 int main(int argc, char* argv[])
 {
-    cout << "Hello World!\n";
+	if (argv[1] == "-h") {
+		cout << "How to use:" << endl;
+		cout << argv[0] << " \"path\\to\\file.archive\" \"path\\to\\output\\folder\"";
+		exit(0);
+	}
 
 
 
@@ -102,4 +106,7 @@ int main(int argc, char* argv[])
     }
     return 0;
 }
+
+
+
 
