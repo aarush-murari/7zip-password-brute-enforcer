@@ -7,7 +7,7 @@
 #include <process.h>
 #include <direct.h>
 #include <vector>
-
+#include <source_location>
 
 
 using namespace std;
@@ -57,17 +57,20 @@ void bruteForce(string file, string output, vector<char> passwordCharArray, int 
 
 int main(int argc, char* argv[])
 {
-	if (argv[1] == "-h") {
-		cout << "How to use:" << endl;
-		cout << argv[0] << " \"path\\to\\file.archive\" \"path\\to\\output\\folder\"";
-		exit(0);
-	}
+	
+	
 
 
 
 	string file;
-	if (argv[1] == nullptr) {
-		cout << "No file provided. Defualting to archive.tar" << endl;
+	//FIXME: "-h" parameter doesn;t work
+	if (argv[1] == "-h") {
+		cout << "Usage:" << endl;
+		cout << argv[0] << " \"path\\to\\file.archive\" \"path\\to\\output\\folder\"" << endl << endl;
+		exit(0);
+	}
+	else if (argv[1] == nullptr) {
+		cout << "No file provided. Defualting to \"archive.tar\"" << endl;
 		file = "archive.tar";
 		//exit(1);
 	}
@@ -78,7 +81,7 @@ int main(int argc, char* argv[])
 	if ((argv[2] == nullptr) || (argc < 2)) {
 		char cwd[1024];
 		if (_getcwd(cwd, sizeof(cwd)) != NULL) {
-			cout << "No output folder. moving to " << cwd << "\\output\\" << endl;
+			cout << "No output folder. Moving to \"" << cwd << "\\output\\\"" << endl;
 			string outputFolder = "\\output\\";
 			output = cwd + outputFolder;
 		}
@@ -92,7 +95,9 @@ int main(int argc, char* argv[])
 	
 
 	if(!(ifstream(file))){
-		cout << "Extraction file '" << file << "' does not exist or is invalid.";
+		cout << "ERROR: Extraction file '" << file << "' does not exist or is invalid." << endl << endl;
+		cout << "Usage:" << endl;
+		cout << argv[0] << " \"path\\to\\file.archive\" \"path\\to\\output\\folder\"" << endl << endl;
 		exit(1);
 	}
     
