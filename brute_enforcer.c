@@ -28,7 +28,7 @@ void bruteForce(string file, string output, vector<char> passwordCharArray, int 
 		string currentPassword(passwordCharArray.begin(), passwordCharArray.end());
 		commandString = "7z.exe x \"" + file + "\" -p\"" + password + "\" -o\"" + output + "\" -y";
 		const char* commandCharArray = commandString.c_str();
-		int zipExtractVal = system(commandCharArray);
+		int zipExtractVal = system(commandCharArray); //It is really slow because of 7zip execution. Will see if 7zip can simply check passwords of if other tools exist that do it much faster without attemptinh to extract the files
 
 		if (zipExtractVal == 0) {
 			cout << "Password found. Password is: " << currentPassword;
