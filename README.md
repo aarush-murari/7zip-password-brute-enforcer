@@ -4,5 +4,5 @@ Though this program can theoretically find the password for any password-protect
 
 To use you can type:
 ```
-brute_enforcer.exe "path\to\file.archive" "output\folder\to\extract\password"
+brute_enforcer.exe "path\to\file.archive" "path\to\output\folder"
 ```
