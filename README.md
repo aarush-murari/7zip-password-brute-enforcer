@@ -7,5 +7,6 @@ Though this program can theoretically find the password for any password-protect
 
 To use you can type:
 ```
-brute_enforcer.exe "path\to\file.archive" "path\to\output\folder"
+BruteEnforcer_x86-64.exe "path\to\file.archive" "path\to\output\folder"
 ```
+This program is really slow, especially because of repeatedly executing 7z.exe. If there are any faster applications for verifying the password of the archive, I'll implement it in the future.
