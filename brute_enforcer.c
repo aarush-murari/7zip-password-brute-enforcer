@@ -1,4 +1,3 @@
-
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
@@ -18,6 +17,7 @@ void bruteForce(string file, string output, vector<char> passwordCharArray, int 
 	char charList[] = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 	string password = "";
 	string commandString;
+	string commandIntegrityString;
 	string nullString;
 	
 	
@@ -27,8 +27,10 @@ void bruteForce(string file, string output, vector<char> passwordCharArray, int 
 	if (position == targetLength) {
 		string currentPassword(passwordCharArray.begin(), passwordCharArray.end());
 		commandString = "7z.exe x \"" + file + "\" -p\"" + password + "\" -o\"" + output + "\" -y";
+		commandIntegrityString = "7z.exe t \"" + file + "\" -p\"" + password;
 		const char* commandCharArray = commandString.c_str();
-		int zipExtractVal = system(commandCharArray); //It is really slow because of 7zip execution. Will see if 7zip can simply check passwords of if other tools exist that do it much faster without attemptinh to extract the files
+		const char* commandIntegrityCharArray = commandIntegrityString.c_str();
+		int zipExtractVal = system(commandIntegrityCharArray);
 
 		if (zipExtractVal == 0) {
 			cout << "Password found. Password is: " << currentPassword;
@@ -42,6 +44,8 @@ void bruteForce(string file, string output, vector<char> passwordCharArray, int 
 				std::cerr << "Error opening file and saving password.\n";
 				exit(1);
 			}
+			cout << "extracting file with password '" + output << "'" << endl;
+			int zipFIleExtractVal = system(commandCharArray);
 			
 		}
 		cout << "Trying: '" << currentPassword << "'";
@@ -73,8 +77,8 @@ int main(int argc, char* argv[])
 		exit(0);
 	}
 	else if (argv[1] == nullptr) {
-		cout << "No file provided. Defualting to \"archive.tar\"" << endl;
-		file = "archive.tar";
+		cout << "No file provided. Defualting to \"archive.rar\"" << endl;
+		file = "archive.rar";
 		//exit(1);
 	}
 	else {
